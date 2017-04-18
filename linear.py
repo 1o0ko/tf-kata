@@ -1,5 +1,5 @@
 '''
-Simple script showcasting Tensorboard
+Simple linear reggression in Tensorflow
 '''
 import tensorflow as tf
 
