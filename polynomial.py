@@ -12,6 +12,7 @@ import xlrd
 DATA_FILE = 'data/fire_theft.xls'
 LAMBDA = 0.01
 POL_DEG = 5
+learning_rate = 0.01
 N_EPOCHS = 5000
 
 def poly_n(x, n = POL_DEG):
@@ -28,9 +29,12 @@ def main():
     book = xlrd.open_workbook(DATA_FILE, encoding_override='utf-8')
     sheet = book.sheet_by_index(0)
     data = np.asarray([sheet.row_values(i) for i in range(1, sheet.nrows)])
-    n_samples = sheet.nrows - 1
-    x_data = data[:,0].reshape(n_samples, 1) / np.max(data[:,0])
-    y_data = data[:,1].reshape(n_samples, 1) / np.max(data[:,1])
+    n_observations = sheet.nrows - 1
+    xs = data[:,0].reshape(n_observations, 1)
+    ys = data[:,1].reshape(n_observations, 1)
+
+    xs = (xs - np.mean(xs))/np.std(xs)
+    ys = (ys - np.mean(ys))/np.std(ys)
 
 
    # Step 2: create placeholders for input X (number of fire) and label Y (number of theft)
@@ -46,14 +50,13 @@ def main():
 
     # Step 5: use the square error as the loss function
     with tf.name_scope("Loss"):
-        # error loss
-        loss = tf.reduce_mean(tf.square(Y - Y_predicted, name = 'loss'))
-        # add regularizer term
-        loss = loss + 0.5 * LAMBDA * tf.reduce_sum(w**2)
+        loss = tf.reduce_mean(tf.square(Y - Y_predicted))
+        loss = tf.add(loss, tf.mul(LAMBDA, tf.global_norm([w])))
+
 
     # Step 6: using gradient descent with learning rate of 0.01 to minimize loss
     with tf.name_scope("SDG"):
-        optimizer = tf.train.GradientDescentOptimizer(learning_rate=0.001).minimize(loss)
+        optimizer = tf.train.GradientDescentOptimizer(learning_rate).minimize(cost)
 
 
     # Create operation to initialize all variables
@@ -70,10 +73,10 @@ def main():
 
         # Step 8: train the model
         cost_history = []
-        for i in range(N_EPOCHS): # run 10 epochs
+        for i in range(N_EPOCHS):
             # Session runs optimizer to minimize loss and fetch the value of loss
             _, loss_, summary, = sess.run([optimizer, loss, training_summary],
-                                          feed_dict={X: poly_n(x_data), Y: y_data})
+                                          feed_dict={X: poly_n(xs), Y: ys})
             if i % 100 == 0:
                 writer.add_summary(summary, i)
                 print("Epoch {0}: {1}".format(i, loss_))
@@ -82,9 +85,11 @@ def main():
         w_value = sess.run(w)
 
     # plot the results
-    Y_hat = np.matmul(poly_n(x_data), w_value)
-    plt.plot(x_data, y_data, 'bo',   label='Real data')
-    plt.plot(x_data, Y_hat, 'ro',    label='Predicted data')
+    Y_hat = np.matmul(poly_n(xs), w_value)
+
+    new_x, new_y = zip(*sorted(zip(xs, Y_hat)))
+    plt.plot(xs, ys, 'bo',   label='Real data')
+    plt.plot(new_x, new_y, 'r',    label='Predicted data')
     plt.legend()
     plt.show()
 
