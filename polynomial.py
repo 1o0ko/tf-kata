@@ -87,7 +87,6 @@ def main():
     plt.plot(x_data, Y_hat, 'ro',    label='Predicted data')
     plt.legend()
     plt.show()
-    plt.waitforbuttonpress()
 
 if __name__ == '__main__':
     main()
