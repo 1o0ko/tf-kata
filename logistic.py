@@ -12,7 +12,7 @@ import time
 # Define paramaters for the model
 learning_rate = 0.01
 batch_size = 128
-n_epochs = 10
+n_epochs = 20
 
 # Step 1: Read in data
 # using TF Learn's built in function to load MNIST data to the folder data/mnist
@@ -51,7 +51,7 @@ loss = tf.reduce_mean(entropy, name='loss')
 
 # Step 6: define training op
 # using gradient descent to minimize loss
-optimizer = tf.train.GradientDescentOptimizer(learning_rate).minimize(loss)
+optimizer = tf.train.AdamOptimizer(learning_rate).minimize(loss)
 
 # Create operation to initialize all variables
 init = tf.global_variables_initializer()
@@ -67,9 +67,11 @@ with tf.Session() as sess:
 
     # train the model n_epochs times
     n_batches = int(mnist.train.num_examples/batch_size)
-    for i in range(n_epochs):
 
-        epoch_loss = 0
+
+    prev_epoch_loss = 0.0
+    for i in range(n_epochs):
+        epoch_loss = 0.0
         for _ in range(n_batches):
             X_batch, Y_batch = mnist.train.next_batch(batch_size)
             _, loss_batch, summary = sess.run(
@@ -78,6 +80,13 @@ with tf.Session() as sess:
             )
 
             epoch_loss += loss_batch
+
+        # Allow the training to quit if we've reached a minimum
+        if np.abs(prev_epoch_loss - epoch_loss) < 0.00001:
+            print("Eh, there's no point in trying")
+            break
+        prev_epoch_loss = epoch_loss
+
         print('Average loss epoch {0}: {1}'.format(i, epoch_loss/n_batches))
 
     print('Total time: {0} seconds'.format(time.time() - start_time))
