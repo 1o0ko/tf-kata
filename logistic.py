@@ -12,36 +12,38 @@ import time
 # Define paramaters for the model
 learning_rate = 0.01
 batch_size = 128
-n_epochs = 20
-log_step = 5
+n_epochs = 40
+log_step = 2
 
 # Step 1: Read in data
 # using TF Learn's built in function to load MNIST data to the folder data/mnist
 mnist = input_data.read_data_sets('data/mnist', one_hot=True)
 
-# Step 2: create placeholders for features and labels
-# each image in the MNIST data is of shape 28*28 = 784
-# therefore, each image is represented with a 1x784 tensor
-# there are 10 classes for each image, corresponding to digits 0 - 9. 
-X = tf.placeholder(tf.float32, [None, 784], name="image")
-Y = tf.placeholder(tf.float32, [None, 10], name="label")
-Y_hat = tf.placeholder(tf.float32, [None, 10], name="prediction")
+with tf.name_scope("Input"):
+    # Step 2: create placeholders for features and labels
+    # each image in the MNIST data is of shape 28*28 = 784
+    # therefore, each image is represented with a 1x784 tensor
+    # there are 10 classes for each image, corresponding to digits 0 - 9. 
+    X = tf.placeholder(tf.float32, [None, 784], name="image")
+    Y = tf.placeholder(tf.float32, [None, 10], name="label")
 
 # Step 3: create weights and bias
 # weights and biases are initialized to 0
 # shape of w depends on the dimension of X and Y so that Y = X * w + b
 # shape of b depends on Y
-with tf.name_scope("Model"):
+with tf.name_scope("weights"):
     w = tf.Variable(tf.truncated_normal([784, 10], stddev=0.1), name='w')
+
+with tf.name_scope("biases"):
     b = tf.Variable(tf.constant(0.1, shape=[1, 10]), name='b')
 
-    # Step 4: build model
-    # the model that returns the logits.
-    # this logits will be later passed through softmax layer
-    # to get the probability distribution of possible label of the image
-    # DO NOT DO SOFTMAX HERE
-
-    logits = tf.add(tf.matmul(X, w), b, name='logits')
+# Step 4: build model
+# the model that returns the logits.
+# this logits will be later passed through softmax layer
+# to get the probability distribution of possible label of the image
+# DO NOT DO SOFTMAX HERE
+with tf.name_scope("Model"):
+        logits = tf.add(tf.matmul(X, w), b, name='logits')
 
 with tf.name_scope("Loss"):
     # Step 5: define loss function
@@ -57,23 +59,26 @@ with tf.name_scope("Loss"):
 with tf.name_scope("SDG"):
     optimizer = tf.train.AdamOptimizer(learning_rate).minimize(loss)
 
-# Create operation to initialize all variables
-init = tf.global_variables_initializer()
-
-
 # Accuracy
 with tf.name_scope("Evaluation"):
     Y_hat = tf.nn.softmax(logits)
     correct_prediction = tf.equal(tf.argmax(Y, 1), tf.argmax(Y_hat, 1))
     accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
 
-# Create a summary to monitor loss
-training_summary = tf.summary.scalar("training_accuracy", accuracy)
-validation_summary = tf.summary.scalar("validation_accuracy", accuracy)
+# Create operation to initialize all variables
+init = tf.global_variables_initializer()
 
+# Create a summary to monitor loss
+tf.summary.scalar("accuracy", accuracy, collections=['train', 'test'])
+tf.summary.scalar("loss", loss, collections=['train', 'test'])
+
+# merge summaries per collection
+training_summary = tf.summary.merge_all('train')
+validation_summary = tf.summary.merge_all('test')
 
 with tf.Session() as sess:
-    writer = tf.summary.FileWriter('./graphs/logistic', sess.graph)
+    writer_test = tf.summary.FileWriter('./graphs/logistic/train', sess.graph)
+    writer_val = tf.summary.FileWriter('./graphs/logistic/val', sess.graph)
 
     start_time = time.time()
     sess.run(init)
@@ -95,22 +100,22 @@ with tf.Session() as sess:
 
         print('Average loss epoch {0}: {1}'.format(i, epoch_loss/n_batches))
 
-        if i and i % log_step == 0:
+        if i % log_step == 0:
             # To log training accuracy.
             train_acc, train_summ = sess.run([accuracy, training_summary],
                                              feed_dict={
                                                  X: mnist.train.images,
                                                  Y: mnist.train.labels})
-            print('Training accuracy {0}: {1}'.format(i, train_acc))
-            writer.add_summary(train_summ, i)
+            print('\tTraining accuracy {0}: {1}'.format(i, train_acc))
+            writer_test.add_summary(train_summ, i)
 
             # To log validation accuracy.
             valid_acc, valid_summ = sess.run([accuracy, validation_summary],
                                              feed_dict={
                                                  X: mnist.validation.images,
                                                  Y: mnist.validation.labels})
-            print('Validation accuracy {0}: {1}'.format(i, valid_acc))
-            writer.add_summary(valid_summ, i)
+            print('\tValidation accuracy {0}: {1}'.format(i, valid_acc))
+            writer_val.add_summary(valid_summ, i)
 
     print('Total time: {0} seconds'.format(time.time() - start_time))
     print('Optimization Finished!')
@@ -121,5 +126,3 @@ with tf.Session() as sess:
         Y: mnist.test.labels})
 
     print('Accuracy {0}'.format(test_acc))
-
-    writer.close()

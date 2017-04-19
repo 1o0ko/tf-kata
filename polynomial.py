@@ -48,7 +48,7 @@ def main():
             for (x, y) in zip(xs, ys):
                 sess.run(optimizer, feed_dict={X: x, Y: y})
 
-            training_cost = sess.run(cost, feed_dict={X: xs, Y: ys})
+            training_cost = sess.run(cost, feed_dict={x: xs, y: ys})
 
             if epoch_i % 100 == 0:
                 print("Epoch {0}: {1}".format(epoch_i, training_cost))
