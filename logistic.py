@@ -32,8 +32,8 @@ Y_hat = tf.placeholder(tf.float32, [None, 10], name="prediction")
 # shape of w depends on the dimension of X and Y so that Y = X * w + b
 # shape of b depends on Y
 with tf.name_scope("Model"):
-    w = tf.Variable(tf.zeros([784, 10]), name='w')
-    b = tf.Variable(tf.zeros([1, 10]), name='b')
+    w = tf.Variable(tf.truncated_normal([784, 10], stddev=0.1), name='w')
+    b = tf.Variable(tf.constant(0.1, shape=[1, 10]), name='b')
 
     # Step 4: build model
     # the model that returns the logits.
@@ -41,7 +41,6 @@ with tf.name_scope("Model"):
     # to get the probability distribution of possible label of the image
     # DO NOT DO SOFTMAX HERE
 
-    # logits = X * w + b
     logits = tf.add(tf.matmul(X, w), b, name='logits')
 
 with tf.name_scope("Loss"):
