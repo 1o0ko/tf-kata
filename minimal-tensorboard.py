@@ -12,6 +12,7 @@ def main():
     x = tf.add(a, b)
 
     with tf.Session() as sess:
+        # Create writer to dump stuff to
         writer = tf.summary.FileWriter('./graphs', sess.graph)
         print(sess.run(x))
 
