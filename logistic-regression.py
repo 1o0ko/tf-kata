@@ -77,7 +77,7 @@ training_summary = tf.summary.merge_all('train')
 validation_summary = tf.summary.merge_all('test')
 
 with tf.Session() as sess:
-    writer_test = tf.summary.FileWriter('./graphs/logistic/train', sess.graph)
+    writer_train = tf.summary.FileWriter('./graphs/logistic/train', sess.graph)
     writer_val = tf.summary.FileWriter('./graphs/logistic/val', sess.graph)
 
     start_time = time.time()
@@ -107,7 +107,7 @@ with tf.Session() as sess:
                                                  X: mnist.train.images,
                                                  Y: mnist.train.labels})
             print('\tTraining accuracy {0}: {1}'.format(i, train_acc))
-            writer_test.add_summary(train_summ, i)
+            writer_train.add_summary(train_summ, i)
 
             # To log validation accuracy.
             valid_acc, valid_summ = sess.run([accuracy, validation_summary],
@@ -126,3 +126,7 @@ with tf.Session() as sess:
         Y: mnist.test.labels})
 
     print('Accuracy {0}'.format(test_acc))
+
+    # close writers
+    writer_train.close()
+    writer_val.close()
