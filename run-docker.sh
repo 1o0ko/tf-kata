@@ -6,7 +6,7 @@ CPU_IMAGE=tensorflow/tensorflow
 
 DATA=/mnt/data/
 MODELS=/mnt/models
-NAME=tf-containter
+NAME=tf-container
 
 # parse arguments
 while getopts gd:m:p: option
