@@ -11,5 +11,5 @@ Repository that is losely inspired by [CS 20SI: Tensorflow for Deep Learning Res
 * [logistic regression](./logistic-regression.py) train on `obligatory` MNIST: bonus `validation dataset` and cool pplots in Tensorboard
 
 ## Tensorboard
-* [minimal example](./minimal-tenssorboard.py)
+* [minimal example](./minimal-tensorboard.py)
 * [logistic regression with train and validation split](./logistic-regression.py)
