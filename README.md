@@ -9,7 +9,7 @@ Repository that is losely inspired by [CS 20SI: Tensorflow for Deep Learning Res
 * [linear regression with OOP](./linear-regression-fancy.py): simple example how to organize code with classes. 
 
 ## Logistic regression
-* [logistic regression](./logistic-regression.py) train on `obligatory` MNIST.
+* [logistic regression](./logistic-regression.py) trained on `obligatory` MNIST.
 
 # Infrastructure and Debugging
 ## Tensorboard
