@@ -1,2 +1,6 @@
 graphs
 data
+
+*.swp
+__pycache__
+*.pyc

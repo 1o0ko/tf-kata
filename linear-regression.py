@@ -3,24 +3,16 @@ Simple linear regression example in TensorFlow
 This program tries to predict the number of thefts from
 the number of fire in the city of Chicago
 """
-
-import numpy as np
 import matplotlib.pyplot as plt
 import tensorflow as tf
-import xlrd
 
-DATA_FILE = 'data/fire_theft.xls'
+from data import load_fire_theft
+
 
 def main():
     # Phase 1: Assemble the graph
     # Step 1: read in data from the .xls file
-    book = xlrd.open_workbook(DATA_FILE, encoding_override='utf-8')
-    sheet = book.sheet_by_index(0)
-    data = np.asarray([sheet.row_values(i) for i in range(1, sheet.nrows)])
-    n_samples = sheet.nrows - 1
-    x_data = data[:,0].reshape(n_samples, 1)
-    y_data = data[:,1].reshape(n_samples, 1)
-
+    x_data, y_data = load_fire_theft()
 
     # Step 2: create placeholders for input X (number of fire) and label Y (number of theft)
     X = tf.placeholder(tf.float32, shape=[None, 1], name = "X")
@@ -41,7 +33,6 @@ def main():
     # Step 6: using gradient descent with learning rate of 0.01 to minimize loss
     with tf.name_scope("SDG"):
         optimizer = tf.train.GradientDescentOptimizer(learning_rate=0.001).minimize(loss)
-
 
     # Create operation to initialize all variables
     init = tf.global_variables_initializer()
