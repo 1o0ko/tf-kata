@@ -117,6 +117,9 @@ class Trainer:
             # save final model
             saver.save(sess, os.path.join(checkpoint_path, "model_final.ckpt"))
 
+            # close and flush
+            writer.close()
+
             return w_value, b_value
 
 
