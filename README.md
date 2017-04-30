@@ -9,12 +9,12 @@ Repository that is losely inspired by [CS 20SI: Tensorflow for Deep Learning Res
 * [linear regression with OOP](./linear-regression-fancy.py): simple example how to organize code with classes. 
 
 ## Logistic regression
-* [logistic regression](./logistic-regression.py) train on `obligatory` MNIST: bonus `validation dataset` and cool pplots in Tensorboard
+* [logistic regression](./logistic-regression.py) train on `obligatory` MNIST.
 
 # Infrastructure and Debugging
 ## Tensorboard
 * [minimal example](./minimal-tensorboard.py)
-* [logistic regression with train and validation split](./logistic-regression.py)
+* [logistic regression with train and validation split](./logistic-regression.py): validation and training error plotted on the same graph. 
 
 ## Pipelines
-* [custom datastructures](./pipelines/pipeline-simple.py): MNIST as custom dataset
+* [custom datastructures](./pipelines/pipeline-simple.py): MNIST as a custom dataset
