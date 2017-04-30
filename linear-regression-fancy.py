@@ -11,7 +11,10 @@ import matplotlib.pyplot as plt
 import tensorflow as tf
 import xlrd
 
+from datetime import datetime
 from utils import define_scope
+
+
 DATA_FILE = 'data/fire_theft.xls'
 
 
@@ -65,9 +68,20 @@ class Dataset:
 
 class Trainer:
 
+    def get_writer(self, log_path, sess):
+        current_time = datetime.utcnow().strftime("%Y%m%d%H%M%S")
+        log_path = os.path.join(log_path, "run-{0}".format(current_time))
+        writer = tf.summary.FileWriter(log_path, sess.graph)
+
+        return writer
+
     def run(self, model, data,
             checkpoint_step=10,
-            checkpoint_path='./checkpoints'):
+            checkpoint_path='./checkpoints',
+            log_path='./graphs'):
+        '''
+        Train the model
+        '''
         # Create operation to initialize all variables
         init = tf.global_variables_initializer()
 
@@ -79,25 +93,28 @@ class Trainer:
 
         # Phase 2: Train our model
         with tf.Session() as sess:
-            writer = tf.summary.FileWriter('./graphs', sess.graph)
+            # initialize writter
+            writer = self.get_writer(log_path, sess)
+
             sess.run(init)
 
             for i in range(20):
-                _, loss_, summary, = sess.run(
-                    [model.optimize, model.error, training_summary],
+                _, loss_, summary, = sess.run([
+                    model.optimize, model.error, training_summary],
                     feed_dict={model.X: data.x, model.Y: data.y})
 
                 writer.add_summary(summary, i)
 
                 print("Epoch {0}: {1}".format(i, loss_))
 
-                # save model
+                # save model at checkpoint 
                 if i % checkpoint_step == 0:
                     save_path = os.path.join(checkpoint_path, "model_at_{0}.ckpt".format(i))
                     saver.save(sess, save_path)
 
             w_value, b_value = sess.run([model.w, model.b])
 
+            # save final model
             saver.save(sess, os.path.join(checkpoint_path, "model_final.ckpt"))
 
             return w_value, b_value
