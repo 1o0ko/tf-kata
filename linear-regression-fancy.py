@@ -3,7 +3,7 @@ Simple linear regression example in TensorFlow
 This program tries to predict the number of thefts from
 the number of fire in the city of Chicago
 
-In this example we are following OOP approach
+In this example we follow the OOP approach
 """
 from utils import define_scope
 
