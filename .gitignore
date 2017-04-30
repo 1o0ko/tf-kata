@@ -1,5 +1,6 @@
 graphs
 data
+checkpoints
 
 *.swp
 __pycache__

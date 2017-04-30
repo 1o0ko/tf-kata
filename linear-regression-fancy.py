@@ -5,13 +5,13 @@ the number of fire in the city of Chicago
 
 In this example we follow the OOP approach
 """
-from utils import define_scope
-
+import os
 import numpy as np
 import matplotlib.pyplot as plt
 import tensorflow as tf
 import xlrd
 
+from utils import define_scope
 DATA_FILE = 'data/fire_theft.xls'
 
 
@@ -65,12 +65,17 @@ class Dataset:
 
 class Trainer:
 
-    def run(self, model, data):
+    def run(self, model, data,
+            checkpoint_step=10,
+            checkpoint_path='./checkpoints'):
         # Create operation to initialize all variables
         init = tf.global_variables_initializer()
 
         # Create a summary to monitor loss
         training_summary = tf.summary.scalar("loss", model.error)
+
+        # Create model saver
+        saver = tf.train.Saver()
 
         # Phase 2: Train our model
         with tf.Session() as sess:
@@ -86,8 +91,14 @@ class Trainer:
 
                 print("Epoch {0}: {1}".format(i, loss_))
 
-            # Step 9: output the values of w and b
+                # save model
+                if i % checkpoint_step == 0:
+                    save_path = os.path.join(checkpoint_path, "model_at_{0}.ckpt".format(i))
+                    saver.save(sess, save_path)
+
             w_value, b_value = sess.run([model.w, model.b])
+
+            saver.save(sess, os.path.join(checkpoint_path, "model_final.ckpt"))
 
             return w_value, b_value
 
