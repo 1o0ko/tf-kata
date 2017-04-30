@@ -47,7 +47,6 @@ def main():
         sess.run(init)
 
         # Step 8: train the model
-        cost_history = []
         for i in range(20): # run 10 epochs
             # Session runs optimizer to minimize loss and fetch the value of loss
             _, loss_, summary, = sess.run([optimizer, loss, training_summary],
@@ -65,6 +64,7 @@ def main():
     plt.plot(X, X * w_value + b_value,  'r',    label='Predicted data')
     plt.legend()
     plt.show()
+
 
 if __name__ == '__main__':
     main()
