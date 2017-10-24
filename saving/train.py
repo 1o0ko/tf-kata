@@ -1,16 +1,29 @@
 """
-Saving a simple model
+Usage: train.py PATH
+
+Arguments:
+    PATH    path to save model
 """
+import os
+
+import numpy as np
 import tensorflow as tf
 
-from data import load_fire_theft
+from docopt import docopt
 
+def gen_data(n, a=3.0, b=1.0):
+   x = np.linspace(-5, 5, n)
+   epsilon = np.random.normal(0, 0.1, n)
+   y = a*x + b + epsilon
 
-def main():
+   return x.reshape(n, 1), y.reshape(n, 1)
+
+def main(args):
     # Phase 1: Assemble the graph
 
     # Step 1: read in data from the .xls file
-    x_data, y_data = load_fire_theft()
+    theta  = (3, 1)
+    x_data, y_data = gen_data(100, *theta)
 
     # Step 2: create placeholders for input X (number of fire) and label Y (number of theft)
     X = tf.placeholder(tf.float32, shape=[None, 1], name = "X")
@@ -44,16 +57,23 @@ def main():
         sess.run(init)
 
         # Step 8: train the model
-        for i in range(20): # run 10 epochs
+        for i in range(500): # run 500 epochs
             # Session runs optimizer to minimize loss and fetch the value of loss
             _, loss_, = sess.run([optimizer, loss],
                                  feed_dict={X: x_data, Y: y_data})
 
-            print("Epoch {0}: {1}".format(i, loss_))
+            if i % 10 == 0:
+                print("Epoch {0}: {1}".format(i, loss_))
 
-        saver.save(sess, './checkpoints') 
+        # Step 9: output the values of w and b
+        w_value, b_value = sess.run([w, b])
+        print("w_hat: %0.2f, b_hat: %0.2f" % (w_value, b_value))
+        print("w: %0.2f, b: %0.2f" % theta)
+
+        saver.save(sess, os.path.join(args['PATH'], 'model.ckpt')
 
 
 
 if __name__ == '__main__':
-    main()
+    args = docopt(__doc__)
+    main(args)
