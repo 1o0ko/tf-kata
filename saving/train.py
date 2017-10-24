@@ -70,7 +70,7 @@ def main(args):
         print("w_hat: %0.2f, b_hat: %0.2f" % (w_value, b_value))
         print("w: %0.2f, b: %0.2f" % theta)
 
-        saver.save(sess, os.path.join(args['PATH'], 'model.ckpt')
+        saver.save(sess, os.path.join(args['PATH'], 'model.ckpt'))
 
 
 
