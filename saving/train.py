@@ -6,17 +6,10 @@ Arguments:
 """
 import os
 
-import numpy as np
 import tensorflow as tf
 
 from docopt import docopt
-
-def gen_data(n, a=3.0, b=1.0):
-   x = np.linspace(-5, 5, n)
-   epsilon = np.random.normal(0, 0.1, n)
-   y = a*x + b + epsilon
-
-   return x.reshape(n, 1), y.reshape(n, 1)
+from utils import gen_data
 
 def main(args):
     # Phase 1: Assemble the graph
