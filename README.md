@@ -18,3 +18,7 @@ Repository that is losely inspired by [CS 20SI: Tensorflow for Deep Learning Res
 
 ## Pipelines
 * [custom datastructures](./pipelines/pipeline-simple.py): MNIST as a custom dataset
+
+## Model managament
+* [training and saving](./saving/train.py): Train simple linear reggresion and save it
+* [loading saved model](./saving/load.py): Load placeholder and ouput tensor and use it for prediction.
