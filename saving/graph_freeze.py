@@ -9,6 +9,10 @@ Based on: https://blog.metaflow.fr/tensorflow-how-to-freeze-a-model-and-serve-it
 """
 import os
 import logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s [%(levelname)s] %(message)s',)
+
 import tensorflow as tf
 
 from typeopt import Arguments
@@ -56,8 +60,8 @@ def freeze_graph(model_dir, node_names):
         with tf.gfile.GFile(output_graph, 'wb') as f:
             f.write(output_graph_def.SerializeToString())
 
-         logger.info("%d ops in the source graph." % len(tf.get_default_graph().node))
-         logger.info("%d ops in the final graph." % len(output_graph_def.node))
+        logger.info("%d ops in the source graph." % len(tf.get_default_graph().get_operations()))
+        logger.info("%d ops in the final graph." % len(output_graph_def.node))
 
 
 if __name__ == '__main__':

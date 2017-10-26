@@ -20,5 +20,9 @@ Repository that is losely inspired by [CS 20SI: Tensorflow for Deep Learning Res
 * [custom datastructures](./pipelines/pipeline-simple.py): MNIST as a custom dataset
 
 ## Model managament
-* [training and saving](./saving/train.py): Train simple linear reggresion and save it
+* [training and saving](./saving/train.py): Train simple linear reggresion and save it.
 * [loading saved model](./saving/load.py): Load placeholder and ouput tensor and use it for prediction.
+* [training and saving in Keras](./saving/keras_train.py): Train simple linear reggresion in Keras and save it.
+* [loading saved model in Keras](./saving/keras_load.py): Load model and use it in production. 
+* [export clean graph](./saving/graph_freeze.py): Select sub-graph relevant to operations, freeze weights and export definition
+* [load and serve frozen graph](./saving/graph_serve.py): Load the graph and serve it using Falcon API endpoint
