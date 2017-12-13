@@ -8,7 +8,7 @@ import numpy as np
 import tensorflow as tf
 import matplotlib.pyplot as plt
 
-from data import load_fire_theft
+from data_helpers import load_fire_theft
 
 
 def main():
