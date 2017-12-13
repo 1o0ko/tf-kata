@@ -6,7 +6,7 @@ the number of fire in the city of Chicago
 import matplotlib.pyplot as plt
 import tensorflow as tf
 
-from data import load_fire_theft
+from data_helpers import load_fire_theft
 
 
 def main():

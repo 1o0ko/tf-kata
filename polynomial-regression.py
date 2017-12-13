@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import tensorflow as tf
 
-from data import load_fire_theft
+from data_helpers import load_fire_theft
 
 DATA_FILE = 'data/fire_theft.xls'
 LAMBDA = 1e-06

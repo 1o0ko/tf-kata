@@ -9,7 +9,7 @@ from tensorflow.python.framework import ops
 from tensorflow.python.framework import dtypes
 
 
-DATASET_PATH='/data/mnist'
+DATASET_PATH='./datasets/mnist'
 TEST_LABELS_FILE='test-labels.csv'
 TRAIN_LABELS_FILE='train-labels.csv'
 

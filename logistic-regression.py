@@ -17,7 +17,7 @@ log_step = 2
 
 # Step 1: Read in data
 # using TF Learn's built in function to load MNIST data to the folder data/mnist
-mnist = input_data.read_data_sets('data/mnist', one_hot=True)
+mnist = input_data.read_data_sets('datasets/mnist', one_hot=True)
 
 with tf.name_scope("Input"):
     # Step 2: create placeholders for features and labels

@@ -1,6 +1,6 @@
 .idea/*
 graphs
-data
+datasets
 checkpoints
 
 *.swp
