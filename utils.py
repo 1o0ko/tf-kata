@@ -4,7 +4,7 @@ import tensorflow as tf
 
 def define_scope(function):
     '''
-    Lazily evaluated property with tf scope 
+    Lazily evaluated property with tf scope
     '''
     attribute = '_cache_' + function.__name__
 

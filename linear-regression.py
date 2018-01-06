@@ -14,13 +14,14 @@ def main():
     # Step 1: read in data from the .xls file
     x_data, y_data = load_fire_theft()
 
-    # Step 2: create placeholders for input X (number of fire) and label Y (number of theft)
-    X = tf.placeholder(tf.float32, shape=[None, 1], name = "X")
-    Y = tf.placeholder(tf.float32, shape=[None, 1], name = "Y")
+    # Step 2: create placeholders for input X (number of fire) and label Y
+    # (number of theft)
+    X = tf.placeholder(tf.float32, shape=[None, 1], name="X")
+    Y = tf.placeholder(tf.float32, shape=[None, 1], name="Y")
 
     # Step 3: create weight and bias, initialized to 0
-    w = tf.Variable(tf.zeros([1,1]), name='w')
-    b = tf.Variable(tf.zeros([1,1]), name='b')
+    w = tf.Variable(tf.zeros([1, 1]), name='w')
+    b = tf.Variable(tf.zeros([1, 1]), name='b')
 
     # Step 4: predict Y (number of theft) from the number of fire
     with tf.name_scope("Model"):
@@ -28,11 +29,13 @@ def main():
 
     # Step 5: use the square error as the loss function
     with tf.name_scope("Loss"):
-        loss = tf.reduce_mean(tf.square(Y - Y_predicted, name = 'loss'))
+        loss = tf.reduce_mean(tf.square(Y - Y_predicted, name='loss'))
 
-    # Step 6: using gradient descent with learning rate of 0.01 to minimize loss
+    # Step 6: using gradient descent with learning rate of 0.01 to minimize
+    # loss
     with tf.name_scope("SDG"):
-        optimizer = tf.train.GradientDescentOptimizer(learning_rate=0.001).minimize(loss)
+        optimizer = tf.train.GradientDescentOptimizer(
+            learning_rate=0.001).minimize(loss)
 
     # Create operation to initialize all variables
     init = tf.global_variables_initializer()
@@ -47,8 +50,9 @@ def main():
         sess.run(init)
 
         # Step 8: train the model
-        for i in range(20): # run 10 epochs
-            # Session runs optimizer to minimize loss and fetch the value of loss
+        for i in range(20):  # run 10 epochs
+            # Session runs optimizer to minimize loss and fetch the value of
+            # loss
             _, loss_, summary, = sess.run([optimizer, loss, training_summary],
                                           feed_dict={X: x_data, Y: y_data})
             writer.add_summary(summary, i)
@@ -60,8 +64,8 @@ def main():
 
     # plot the results
     X, Y = x_data, y_data
-    plt.plot(X, Y,  'bo',   label='Real data')
-    plt.plot(X, X * w_value + b_value,  'r',    label='Predicted data')
+    plt.plot(X, Y, 'bo', label='Real data')
+    plt.plot(X, X * w_value + b_value, 'r', label='Predicted data')
     plt.legend()
     plt.show()
 

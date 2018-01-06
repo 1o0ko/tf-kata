@@ -17,12 +17,19 @@ from utils import gen_data
 
 
 def main(args):
-    theta  = (3, 1)
+    theta = (3, 1)
     x_data, y_data = gen_data(100, *theta)
 
-
     model = Sequential()
-    model.add(Dense(1, input_shape=(1, ), init='uniform', name='theta', activation='linear'))
+    model.add(
+        Dense(
+            1,
+            input_shape=(
+                1,
+            ),
+            init='uniform',
+            name='theta',
+            activation='linear'))
     model.compile(loss='mse', optimizer='rmsprop')
 
     model.fit(x_data, y_data, epochs=500, verbose=0)

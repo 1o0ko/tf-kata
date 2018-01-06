@@ -16,14 +16,15 @@ n_epochs = 40
 log_step = 2
 
 # Step 1: Read in data
-# using TF Learn's built in function to load MNIST data to the folder data/mnist
+# using TF Learn's built in function to load MNIST data to the folder
+# data/mnist
 mnist = input_data.read_data_sets('datasets/mnist', one_hot=True)
 
 with tf.name_scope("Input"):
     # Step 2: create placeholders for features and labels
     # each image in the MNIST data is of shape 28*28 = 784
     # therefore, each image is represented with a 1x784 tensor
-    # there are 10 classes for each image, corresponding to digits 0 - 9. 
+    # there are 10 classes for each image, corresponding to digits 0 - 9.
     X = tf.placeholder(tf.float32, [None, 784], name="image")
     Y = tf.placeholder(tf.float32, [None, 10], name="label")
 
@@ -43,7 +44,7 @@ with tf.name_scope("biases"):
 # to get the probability distribution of possible label of the image
 # DO NOT DO SOFTMAX HERE
 with tf.name_scope("Model"):
-        logits = tf.add(tf.matmul(X, w), b, name='logits')
+    logits = tf.add(tf.matmul(X, w), b, name='logits')
 
 with tf.name_scope("Loss"):
     # Step 5: define loss function
@@ -51,7 +52,8 @@ with tf.name_scope("Loss"):
     # use the method:
     # tf.nn.softmax_cross_entropy_with_logits(logits, Y)
     # then use tf.reduce_mean to get the mean loss of the batch
-    entropy = tf.nn.softmax_cross_entropy_with_logits(logits=logits, labels=Y, name="entropy")
+    entropy = tf.nn.softmax_cross_entropy_with_logits(
+        logits=logits, labels=Y, name="entropy")
     loss = tf.reduce_mean(entropy, name='loss')
 
 # Step 6: define training op
@@ -84,7 +86,7 @@ with tf.Session() as sess:
     sess.run(init)
 
     # train the model n_epochs times
-    n_batches = int(mnist.train.num_examples/batch_size)
+    n_batches = int(mnist.train.num_examples / batch_size)
 
     for i in range(n_epochs):
         epoch_loss = 0.0
@@ -98,7 +100,7 @@ with tf.Session() as sess:
             # update loss
             epoch_loss += loss_batch
 
-        print('Average loss epoch {0}: {1}'.format(i, epoch_loss/n_batches))
+        print('Average loss epoch {0}: {1}'.format(i, epoch_loss / n_batches))
 
         if i % log_step == 0:
             # To log training accuracy.

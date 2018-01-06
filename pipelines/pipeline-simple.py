@@ -9,18 +9,20 @@ from tensorflow.python.framework import ops
 from tensorflow.python.framework import dtypes
 
 
-DATASET_PATH='./datasets/mnist'
-TEST_LABELS_FILE='test-labels.csv'
-TRAIN_LABELS_FILE='train-labels.csv'
+DATASET_PATH = './datasets/mnist'
+TEST_LABELS_FILE = 'test-labels.csv'
+TRAIN_LABELS_FILE = 'train-labels.csv'
 
 TEST_SET_SIZE = 5
-IMAGE_HEIGHT  = 28
-IMAGE_WIDTH   = 28
-NUM_CHANNELS  = 3
-BATCH_SIZE    = 5
+IMAGE_HEIGHT = 28
+IMAGE_WIDTH = 28
+NUM_CHANNELS = 3
+BATCH_SIZE = 5
+
 
 def encode_label(label):
     return int(label)
+
 
 def read_label_file(source_file):
     with open(source_file, "r") as f:
@@ -34,15 +36,17 @@ def read_label_file(source_file):
 
 
 if __name__ == '__main__':
-    train_filepaths, train_labels = read_label_file(os.path.join(DATASET_PATH, TRAIN_LABELS_FILE))
-    test_filepaths, test_labels = read_label_file(os.path.join(DATASET_PATH, TEST_LABELS_FILE))
+    train_filepaths, train_labels = read_label_file(
+        os.path.join(DATASET_PATH, TRAIN_LABELS_FILE))
+    test_filepaths, test_labels = read_label_file(
+        os.path.join(DATASET_PATH, TEST_LABELS_FILE))
 
     # full path
-    train_filepaths = [os.path.join(DATASET_PATH, file_path) 
-        for file_path in train_filepaths]
+    train_filepaths = [os.path.join(DATASET_PATH, file_path)
+                       for file_path in train_filepaths]
 
-    test_filepaths =  [os.path.join(DATASET_PATH, file_path) 
-        for file_path in test_filepaths]
+    test_filepaths = [os.path.join(DATASET_PATH, file_path)
+                      for file_path in test_filepaths]
 
     # join and take sampe
     all_filepaths = (train_filepaths + test_filepaths)[:20]
@@ -60,17 +64,18 @@ if __name__ == '__main__':
     partitions[:TEST_SET_SIZE] = [1] * TEST_SET_SIZE
     random.shuffle(partitions)
 
-    # partition our data into a test and train set according to our partition vector
+    # partition our data into a test and train set according to our partition
+    # vector
     train_images, test_images = tf.dynamic_partition(all_images, partitions, 2)
     train_labels, test_labels = tf.dynamic_partition(all_labels, partitions, 2)
 
     # create input queues
     train_input_queue = tf.train.slice_input_producer(
-					[train_images, train_labels],
-					shuffle=False)
+        [train_images, train_labels],
+        shuffle=False)
     test_input_queue = tf.train.slice_input_producer(
-					[test_images, test_labels],
-					shuffle=False)
+        [test_images, test_labels],
+        shuffle=False)
 
     # process path and string tensor into an image and a label
     file_content = tf.read_file(train_input_queue[0])
@@ -85,39 +90,38 @@ if __name__ == '__main__':
     train_image.set_shape([IMAGE_HEIGHT, IMAGE_WIDTH, NUM_CHANNELS])
     test_image.set_shape([IMAGE_HEIGHT, IMAGE_WIDTH, NUM_CHANNELS])
 
-
     # collect batches of images before processing
     train_image_batch, train_label_batch = tf.train.batch(
-					[train_image, train_label],
-					batch_size=BATCH_SIZE
-					#,num_threads=1
-					)
+        [train_image, train_label],
+        batch_size=BATCH_SIZE
+        #,num_threads=1
+    )
     test_image_batch, test_label_batch = tf.train.batch(
-					[test_image, test_label],
-					batch_size=BATCH_SIZE
-					#,num_threads=1
-					)
+        [test_image, test_label],
+        batch_size=BATCH_SIZE
+        #,num_threads=1
+    )
 
     print "input pipeline ready"
 
     with tf.Session() as sess:
 
-      # initialize the variables
-      sess.run(tf.initialize_all_variables())
+        # initialize the variables
+        sess.run(tf.initialize_all_variables())
 
-      # initialize the queue threads to start to shovel data
-      coord = tf.train.Coordinator()
-      threads = tf.train.start_queue_runners(coord=coord)
+        # initialize the queue threads to start to shovel data
+        coord = tf.train.Coordinator()
+        threads = tf.train.start_queue_runners(coord=coord)
 
-      print "from the train set:"
-      for i in range(20):
-	print sess.run(train_label_batch)
+        print "from the train set:"
+        for i in range(20):
+            print sess.run(train_label_batch)
 
-      print "from the test set:"
-      for i in range(10):
-	print sess.run(test_label_batch)
+        print "from the test set:"
+        for i in range(10):
+            print sess.run(test_label_batch)
 
-      # stop our queue threads and properly close the session
-      coord.request_stop()
-      coord.join(threads)
-      sess.close()
+        # stop our queue threads and properly close the session
+        coord.request_stop()
+        coord.join(threads)
+        sess.close()

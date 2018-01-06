@@ -11,11 +11,12 @@ import tensorflow as tf
 
 from docopt import docopt
 
+
 def sample_data():
-    return np.array([10.0]).reshape(1,1)
+    return np.array([10.0]).reshape(1, 1)
 
 
-class  Model(object):
+class Model(object):
     def __init__(self, graph_def):
         self.session = tf.Session()
 

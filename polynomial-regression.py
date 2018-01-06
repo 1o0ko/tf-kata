@@ -20,14 +20,15 @@ def main():
     # Step 1: read in data from the .xls file
     xs, ys = load_fire_theft()
 
-    xs = (xs - np.mean(xs))/np.std(xs)
-    ys = (ys - np.mean(ys))/np.std(ys)
+    xs = (xs - np.mean(xs)) / np.std(xs)
+    ys = (ys - np.mean(ys)) / np.std(ys)
 
-    # Step 2: create placeholders for input X (number of fire) and label Y (number of theft)
+    # Step 2: create placeholders for input X (number of fire) and label Y
+    # (number of theft)
     X = tf.placeholder(tf.float32)
     Y = tf.placeholder(tf.float32)
 
-    # Step 3, 4: create weights and predictions 
+    # Step 3, 4: create weights and predictions
     with tf.name_scope("Model"):
         Y_pred = tf.Variable(0.0, name='Y_hat')
         for pow_i in range(0, POL_DEG):
@@ -41,9 +42,11 @@ def main():
         # Regularization term
         loss = tf.add(loss, tf.multiply(LAMBDA, tf.global_norm([W])))
 
-    # Step 6: using gradient descent with learning rate of 0.01 to minimize loss
+    # Step 6: using gradient descent with learning rate of 0.01 to minimize
+    # loss
     with tf.name_scope("SDG"):
-        optimizer = tf.train.GradientDescentOptimizer(learning_rate).minimize(loss)
+        optimizer = tf.train.GradientDescentOptimizer(
+            learning_rate).minimize(loss)
 
     # Create operation to initialize all variables
     init = tf.global_variables_initializer()
@@ -67,8 +70,8 @@ def main():
     # have to sort for line plot
     # plot the results
     new_x, new_y = zip(*sorted(zip(xs, Y_hat)))
-    plt.plot(xs, ys, 'bo',   label='Real data')
-    plt.plot(new_x, new_y, 'r',    label='Predicted data')
+    plt.plot(xs, ys, 'bo', label='Real data')
+    plt.plot(new_x, new_y, 'r', label='Predicted data')
     plt.legend()
     plt.show()
 

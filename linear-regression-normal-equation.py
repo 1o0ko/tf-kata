@@ -31,12 +31,13 @@ def main():
     # plot the results
     X, Y = x_data, y_data
 
-    # Calculate the model predictions 
+    # Calculate the model predictions
     Y_hat = np.dot(x_data_with_bias, theta_value)
-    plt.plot(X, Y,  'bo',   label='Real data')
-    plt.plot(X, Y_hat, 'r',    label='Predicted data')
+    plt.plot(X, Y, 'bo', label='Real data')
+    plt.plot(X, Y_hat, 'r', label='Predicted data')
     plt.legend()
     plt.show()
+
 
 if __name__ == '__main__':
     main()

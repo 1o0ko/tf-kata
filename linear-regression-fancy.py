@@ -107,9 +107,10 @@ class Trainer:
 
                 print("Epoch {0}: {1}".format(i, loss_))
 
-                # save model at checkpoint 
+                # save model at checkpoint
                 if i % checkpoint_step == 0:
-                    save_path = os.path.join(checkpoint_path, "model_at_{0}.ckpt".format(i))
+                    save_path = os.path.join(
+                        checkpoint_path, "model_at_{0}.ckpt".format(i))
                     saver.save(sess, save_path)
 
             w_value, b_value = sess.run([model.w, model.b])
@@ -135,8 +136,8 @@ def main():
 
     # plot the results
     X, Y = data.x, data.y
-    plt.plot(X, Y,  'bo',   label='Real data')
-    plt.plot(X, X * w_value + b_value,  'r',    label='Predicted data')
+    plt.plot(X, Y, 'bo', label='Real data')
+    plt.plot(X, X * w_value + b_value, 'r', label='Predicted data')
     plt.legend()
     plt.show()
 

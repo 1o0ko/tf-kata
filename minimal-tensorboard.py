@@ -19,5 +19,6 @@ def main():
     # close the writer when you’re done using it
     writer.close()
 
+
 if __name__ == '__main__':
     main()

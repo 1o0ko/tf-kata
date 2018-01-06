@@ -11,8 +11,9 @@ import tensorflow as tf
 
 from docopt import docopt
 
+
 def sample_data():
-    return np.array([10.0]).reshape(1,1)
+    return np.array([10.0]).reshape(1, 1)
 
 
 def predict(path, x_data):
@@ -28,8 +29,9 @@ def predict(path, x_data):
     W = graph.get_tensor_by_name('theta/kernel:0')
     B = graph.get_tensor_by_name('theta/bias:0')
 
-    # If we used dropout or any other operation that have different behaviour 
-    # in test time, we would have to fetch appropriate tensor  and set it value to 0.
+    # If we used dropout or any other operation that have different behaviour
+    # in test time, we would have to fetch appropriate tensor  and set it
+    # value to 0.
     with tf.Session() as sess:
         saver.restore(sess, os.path.join(path, 'model'))
         y_predicted, w, b = sess.run([Y, W, B], feed_dict={X: x_data})

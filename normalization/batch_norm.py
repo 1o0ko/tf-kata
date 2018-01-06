@@ -6,29 +6,30 @@ import tensorflow as tf
 
 
 class batch_norm(object):
-  """Code modification of http://stackoverflow.com/a/33950177"""
-  def __init__(self, epsilon=1e-5, momentum = 0.1, name="batch_norm"):
-    with tf.variable_scope(name) as scope:
-      self.epsilon = epsilon
-      self.momentum = momentum
+    """Code modification of http://stackoverflow.com/a/33950177"""
 
-      self.ema = tf.train.ExponentialMovingAverage(decay=self.momentum)
-      self.name=name
+    def __init__(self, epsilon=1e-5, momentum=0.1, name="batch_norm"):
+        with tf.variable_scope(name):
+            self.epsilon = epsilon
+            self.momentum = momentum
 
-  def __call__(self, x, train=True):
-    shape = x.get_shape().as_list()
+            self.ema = tf.train.ExponentialMovingAverage(decay=self.momentum)
+            self.name = name
 
-    with tf.variable_scope(self.name) as scope:
-      self.gamma = tf.get_variable("gamma", [shape[-1]],
-          initializer=tf.random_normal_initializer(1., 0.02))
-      self.beta = tf.get_variable("beta", [shape[-1]],
-          initializer=tf.constant_initializer(0.))
+    def __call__(self, x, train=True):
+        shape = x.get_shape().as_list()
 
-      mean, variance = tf.nn.moments(x, [0, 1, 2])
+        with tf.variable_scope(self.name):
+            self.gamma = tf.get_variable(
+                "gamma", [shape[-1]], initializer=tf.random_normal_initializer(1., 0.02))
+            self.beta = tf.get_variable(
+                "beta", [shape[-1]], initializer=tf.constant_initializer(0.))
 
-      return tf.nn.batch_norm_with_global_normalization(
-        x, mean, variance, self.beta, self.gamma, self.epsilon,
-        scale_after_normalization=True)
+            mean, variance = tf.nn.moments(x, [0, 1, 2])
+
+            return tf.nn.batch_norm_with_global_normalization(
+                x, mean, variance, self.beta, self.gamma, self.epsilon,
+                scale_after_normalization=True)
 
 
 if __name__ == '__main__':
