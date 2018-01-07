@@ -11,6 +11,9 @@ Repository that is losely inspired by [CS 20SI: Tensorflow for Deep Learning Res
 ## Logistic regression
 * [logistic regression](./logistic-regression.py) trained on `obligatory` MNIST.
 
+## Layers
+* [highway layer](./highway.py) Highway layer from ['Highway Networks'](http://arxiv.org/abs/1505.00387) paper
+
 # Infrastructure and Debugging
 ## Tensorboard
 * [minimal example](./minimal-tensorboard.py)
@@ -28,4 +31,5 @@ Repository that is losely inspired by [CS 20SI: Tensorflow for Deep Learning Res
 * [loading and serving a frozen graph](./saving/graph_serve.py): Load the graph and serve it using Falcon API endpoint
 
 ## NLP
-* [charcter-level CNN word embeddings](./char-cnn.py): Simple implementation from Character Aware Language Models
+* [charcter-level CNN word embeddings](./char-cnn.py): Simple implementation from [Character Aware Language Models](https://arxiv.org/pdf/1508.06615.pdf
+)
