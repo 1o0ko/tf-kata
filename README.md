@@ -26,3 +26,6 @@ Repository that is losely inspired by [CS 20SI: Tensorflow for Deep Learning Res
 * [loading saved model in Keras](./saving/keras_load.py): Load model and use it in production. 
 * [exporting a clean graph](./saving/graph_freeze.py): Select sub-graph relevant to operations, freeze weights and export definition
 * [loading and serving a frozen graph](./saving/graph_serve.py): Load the graph and serve it using Falcon API endpoint
+
+## NLP
+* [charcter-level CNN word embeddings](./char-cnn.py): Simple implementation from Character Aware Language Models
