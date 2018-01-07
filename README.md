@@ -31,5 +31,5 @@ Repository that is losely inspired by [CS 20SI: Tensorflow for Deep Learning Res
 * [loading and serving a frozen graph](./saving/graph_serve.py): Load the graph and serve it using Falcon API endpoint
 
 ## NLP
-* [charcter-level CNN word embeddings](./char-cnn.py): Simple implementation from [Character Aware Language Models](https://arxiv.org/pdf/1508.06615.pdf
+* [charcter-level CNN word embeddings](./char-cnn.py) from [Character Aware Language Models](https://arxiv.org/pdf/1508.06615.pdf
 )
