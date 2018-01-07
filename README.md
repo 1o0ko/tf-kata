@@ -12,7 +12,7 @@ Repository that is losely inspired by [CS 20SI: Tensorflow for Deep Learning Res
 * [logistic regression](./logistic-regression.py) trained on `obligatory` MNIST.
 
 ## Layers
-* [highway layer](./highway.py) Highway layer from ['Highway Networks'](http://arxiv.org/abs/1505.00387) paper
+* [highway layer](./highway.py) ['Highway Networks'](http://arxiv.org/abs/1505.00387) paper
 
 # Infrastructure and Debugging
 ## Tensorboard
