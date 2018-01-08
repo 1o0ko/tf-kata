@@ -17,6 +17,9 @@ Repository that is losely inspired by [CS 20SI: Tensorflow for Deep Learning Res
 ## NLP
 * [charcter-level CNN word embeddings](./char-cnn.py) from [Character Aware Language Models](https://arxiv.org/pdf/1508.06615.pdf)
 
+## Vision
+* [CNN on MNIST using Dataset, Estimator and Experiment API](./higher-level-apis.py)
+
 # Infrastructure and Debugging
 ## Tensorboard
 * [minimal example](./minimal-tensorboard.py)
@@ -32,5 +35,4 @@ Repository that is losely inspired by [CS 20SI: Tensorflow for Deep Learning Res
 * [loading saved model in Keras](./saving/keras_load.py): Load model and use it in production. 
 * [exporting a clean graph](./saving/graph_freeze.py): Select sub-graph relevant to operations, freeze weights and export definition
 * [loading and serving a frozen graph](./saving/graph_serve.py): Load the graph and serve it using Falcon API endpoint
-* [using Dataset, Estimator and Experiment API](./higher-level-apis.py): Take advantage of the new APIs
 
