@@ -14,6 +14,9 @@ Repository that is losely inspired by [CS 20SI: Tensorflow for Deep Learning Res
 ## Layers
 * [highway layer](./highway.py) ['Highway Networks'](http://arxiv.org/abs/1505.00387) paper
 
+## NLP
+* [charcter-level CNN word embeddings](./char-cnn.py) from [Character Aware Language Models](https://arxiv.org/pdf/1508.06615.pdf)
+
 # Infrastructure and Debugging
 ## Tensorboard
 * [minimal example](./minimal-tensorboard.py)
@@ -31,5 +34,3 @@ Repository that is losely inspired by [CS 20SI: Tensorflow for Deep Learning Res
 * [loading and serving a frozen graph](./saving/graph_serve.py): Load the graph and serve it using Falcon API endpoint
 * [using Dataset, Estimator and Experiment API](./higher-level-apis.py): Take advantage of the new APIs
 
-## NLP
-* [charcter-level CNN word embeddings](./char-cnn.py) from [Character Aware Language Models](https://arxiv.org/pdf/1508.06615.pdf)
