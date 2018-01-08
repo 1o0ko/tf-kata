@@ -60,9 +60,6 @@ def experiment_fn(run_config, params):
     Returns:
         (Experiment) Experiment for training the mnist model.
     '''
-    tf.logging.info(run_config)
-    tf.logging.info(params)
-
     # You can change a subset of the run_config properties as
     run_config = run_config.replace(
         save_checkpoints_steps=params.min_eval_frequency)
