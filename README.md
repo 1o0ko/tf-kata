@@ -24,6 +24,7 @@ Repository that is losely inspired by [CS 20SI: Tensorflow for Deep Learning Res
 ## Tensorboard
 * [minimal example](./minimal-tensorboard.py)
 * [logistic regression with train and validation split](./logistic-regression.py): validation and training error plotted on the same graph. 
+* [ops benchmarking with tensorboard and Timeline object](./bencharking.py)
 
 ## Pipelines
 * [custom datastructures](./pipelines/pipeline-simple.py): MNIST as a custom dataset
