@@ -11,8 +11,14 @@ Repository that is losely inspired by [CS 20SI: Tensorflow for Deep Learning Res
 ## Logistic regression
 * [logistic regression](./logistic-regression.py) trained on `obligatory` MNIST.
 
+## CNNs
+* [CNN on MNIST using Dataset, Estimator and Experiment API](./higher-level-apis.py)
+
 ## Layers
 * [highway layer](./highway.py) ['Highway Networks'](http://arxiv.org/abs/1505.00387) paper
+
+## NLP
+* [charcter-level CNN word embeddings](./char-cnn.py) from [Character Aware Language Models](https://arxiv.org/pdf/1508.06615.pdf)
 
 # Infrastructure and Debugging
 ## Tensorboard
@@ -29,7 +35,4 @@ Repository that is losely inspired by [CS 20SI: Tensorflow for Deep Learning Res
 * [loading saved model in Keras](./saving/keras_load.py): Load model and use it in production. 
 * [exporting a clean graph](./saving/graph_freeze.py): Select sub-graph relevant to operations, freeze weights and export definition
 * [loading and serving a frozen graph](./saving/graph_serve.py): Load the graph and serve it using Falcon API endpoint
-* [using Dataset, Estimator and Experiment API](./higher-level-apis.py): Take advantage of the new APIs
 
-## NLP
-* [charcter-level CNN word embeddings](./char-cnn.py) from [Character Aware Language Models](https://arxiv.org/pdf/1508.06615.pdf)
