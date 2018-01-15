@@ -39,8 +39,12 @@ def benchmark_op(fetches, name):
 
 
 if __name__ == '__main__':
-    x = tf.random_normal([1000, 4000], name="x")
-    y = tf.random_normal([4000, 1000], name="y")
-    res = tf.matmul(x, y, name="result")
+    with tf.name_scope("training_ops"):
+        x = tf.random_normal([1000, 4000], name="x")
+        y = tf.random_normal([4000, 1000], name="y")
+        with tf.name_scope('fine_grained'):
+            z = tf.add(y, y, name='adding')
+            a = tf.nn.relu(z, name='ReLU')
+            res = tf.matmul(x, a, name="result")
 
     benchmark_op(res, name='matmul')
