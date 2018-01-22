@@ -1,5 +1,5 @@
 '''
-A simple, two-layer autoEecoder on MNIST without weight-tying
+A simple, two-layer autoencoder on MNIST without weight-tying
 Usage: autoencoder.py [options]
 
 Options:
