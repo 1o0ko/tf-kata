@@ -11,13 +11,16 @@ Repository that is losely inspired by [CS 20SI: Tensorflow for Deep Learning Res
 ## Logistic regression
 * [logistic regression](./logistic-regression.py) trained on `obligatory` MNIST.
 
-## CNNs
-* [CNN on MNIST using Dataset, Estimator and Experiment API](./higher-level-apis.py)
+## Autoencoders
+* [Simple 2-layer autoencoder without weight-tying](./autoencoder.py) trained on `obligatory` MNIST.
+
+## CNN
+* [Classification with CNN on MNIST using Dataset, Estimator and Experiment API](./higher-level-apis.py)
 
 ## Layers
 * [highway layer](./highway.py) ['Highway Networks'](http://arxiv.org/abs/1505.00387) paper
 
-## NLP
+## Embeddings
 * [charcter-level CNN word embeddings](./char-cnn.py) from [Character Aware Language Models](https://arxiv.org/pdf/1508.06615.pdf)
 
 # Infrastructure and Debugging
