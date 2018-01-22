@@ -13,6 +13,7 @@ Repository that is losely inspired by [CS 20SI: Tensorflow for Deep Learning Res
 
 ## Autoencoders
 * [Simple 2-layer autoencoder without weight-tying](./autoencoder.py) trained on `obligatory` MNIST.
+* [Variational Auto-Encoder using tf.contrib.distributionss](./vae.py) trained on `obligatory` MNIST.
 
 ## CNN
 * [Classification with CNN on MNIST using Dataset, Estimator and Experiment API](./higher-level-apis.py)
