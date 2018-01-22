@@ -25,7 +25,7 @@ tf.app.flags.DEFINE_integer(
     docstring='Size of batch.')
 
 
-# Definie and run the experiment 
+# Definie and run the experiment
 def run_experiment(argsv=None):
     ''' Run the training experiment '''
     # Define the model parameters
@@ -265,8 +265,7 @@ def get_train_inputs(batch_size, mnist_data):
 
             # Build dataset iterator
             dataset = tf.data.Dataset.from_tensor_slices(
-               (images_placeholder, labels_placeholder)
-            )
+                (images_placeholder, labels_placeholder))
             dataset = dataset.repeat(None)  # Infinite iterations
             dataset = dataset.shuffle(buffer_size=10000)
             dataset = dataset.batch(batch_size)
@@ -337,7 +336,7 @@ def get_test_inputs(batch_size, mnist_data):
                     iterator.initializer,
                     feed_dict={
                         images_placeholder: images,
-                       labels_placeholder: labels
+                        labels_placeholder: labels
                     })
 
             return next_example, next_label
@@ -347,6 +346,4 @@ def get_test_inputs(batch_size, mnist_data):
 
 
 if __name__ == '__main__':
-    tf.app.run(
-        main=run_experiment
-    )
+    tf.app.run(main=run_experiment)

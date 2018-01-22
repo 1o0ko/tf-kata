@@ -1,16 +1,34 @@
+'''
+Highway layer benchmarking
+Usage: highway.py [options]
+
+Options:
+    -i, --num-iters=<int>   Number of iterations
+                            [default: 10]
+    -b, --batch-size=<int>   Batch size
+                            [default: 32]
+    -t, --time-steps=<int>  Number of time steps
+                            [default: 30]
+    -d, --dimension=<int>   Size of the hidden layer
+                            [default: 30]
+'''
 import time
 import numpy as np
 import tensorflow as tf
 
+from tensorflow.contrib import slim
 from tensorflow.contrib.layers import xavier_initializer
+from typeopt import Arguments
+
+tf.logging.set_verbosity(tf.logging.INFO)
 
 
 def highway(x, i=1, carry_bias=-2.0):
-    """
+    '''
      Highway layer from http://arxiv.org/abs/1505.00387
       t = sigmoid(Wy + b)
       z = t * g(Wy + b) + (1 - t) * y
-    """
+    '''
     D, idx = x.shape[-1].value, len(x.shape) - 1
     # noinspection SpellCheckingInspection
     with tf.variable_scope("highway_%d" % i):
@@ -48,6 +66,7 @@ def highway(x, i=1, carry_bias=-2.0):
 
 
 def highway_einsum(x, i=1, carry_bias=-2.0):
+    ''' highway layer with einsum '''
     D = x.shape[-1].value
     with tf.variable_scope("highway_1_%d" % i):
         # Srivastava et al. (2015) recommend initializing bT to a negative
@@ -83,6 +102,7 @@ def highway_einsum(x, i=1, carry_bias=-2.0):
 
 
 def highway_dense(x, i=1, carry_bias=-2.0):
+    ''' highway layer using a dense layer '''
     D = x.shape[-1].value
     with tf.variable_scope("highway_2_%d" % i):
         H = tf.layers.dense(x, D, activation=tf.nn.relu,
@@ -104,7 +124,7 @@ def highway_dense(x, i=1, carry_bias=-2.0):
 
 
 class HighwayBenchmark(tf.test.Benchmark):
-
+    ''' Benchmark layers '''
     def benchmarkLayer(self, layer_fn, name, B=5, T=10, D=2, iters=100):
 
         x = tf.placeholder(tf.float32, shape=(None, T, D))
@@ -131,8 +151,10 @@ class HighwayBenchmark(tf.test.Benchmark):
 
 
 def main():
-    print("Setting up benchamrks")
-    B, T, D, iters = 32, 30, 30, 11
+    tf.logging.info("Setting up benchamrks")
+    args = Arguments(__doc__, version='Autoencoder example 0.1')
+    B, T, D, iters = \
+            args.batch_size, args.time_steps, args.dimension, args.num_iters
 
     benchmark = HighwayBenchmark()
     benchmark.benchmarkLayer(highway_einsum, "einsum", B, T, D, iters)
