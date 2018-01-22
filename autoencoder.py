@@ -47,11 +47,7 @@ def encoder(x, args):
         layer_1 = tf.nn.sigmoid(tf.add(tf.matmul(x, W_1), b_1))
 
         # 2nd layer
-        W_2 = tf.get_variable(
-            "W_2",
-            shape=[
-                args.num_hidden_1,
-                args.num_hidden_2])
+        W_2 = tf.get_variable("W_2", shape=[args.num_hidden_1, args.num_hidden_2])
         b_2 = tf.get_variable("b_2", shape=[args.num_hidden_2])
         layer_2 = tf.nn.sigmoid(tf.add(tf.matmul(layer_1, W_2), b_2))
 
@@ -62,11 +58,7 @@ def decoder(x, args):
     ''' build decoder without weight tying '''
     with tf.variable_scope("decoder"):
         # 1st layer
-        W_1 = tf.get_variable(
-            "W_1",
-            shape=[
-                args.num_hidden_2,
-                args.num_hidden_1])
+        W_1 = tf.get_variable("W_1", shape=[args.num_hidden_2, args.num_hidden_1])
         b_1 = tf.get_variable("b_1", shape=[args.num_hidden_1])
         layer_1 = tf.nn.sigmoid(tf.add(tf.matmul(x, W_1), b_1))
 
