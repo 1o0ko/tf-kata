@@ -21,8 +21,8 @@ Repository that is losely inspired by [CS 20SI: Tensorflow for Deep Learning Res
 ## Layers
 * [highway layer](./highway.py) ['Highway Networks'](http://arxiv.org/abs/1505.00387) paper
 
-## Embeddings
-* [charcter-level CNN word embeddings](./char-cnn.py) from [Character Aware Language Models](https://arxiv.org/pdf/1508.06615.pdf)
+## NLP Embeddings
+* [charcter-level CNN word embeddings](./nlp/char-cnn.py) from [Character Aware Language Models](https://arxiv.org/pdf/1508.06615.pdf)
 
 # Infrastructure and Debugging
 ## Tensorboard
